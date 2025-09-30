@@ -65,7 +65,11 @@ The full Arduino firmware can be found here:
 1. Connect the SHT3x sensor to the ESP32-S2 Mini (SDA → 33, SCL → 35).  
 2. Upload the firmware to the board using Arduino IDE.  
 3. Open Serial Monitor at **115200 baud** to see Wi-Fi connection progress, IP address, and sensor readings.  
-4. Access the ESP32 web server in a browser using the displayed IP address.  
+4. Access the ESP32 web server in a browser using the displayed IP address.
+
+
+<img width="1405" height="592" alt="image" src="https://github.com/user-attachments/assets/f73642c5-87ae-47f3-b6f9-bfc8f7a8d6d1" />
+
 
 ### Notes
 - If the SHT3x sensor is not detected, try I²C address `0x45`.  
