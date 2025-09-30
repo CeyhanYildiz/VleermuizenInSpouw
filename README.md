@@ -50,7 +50,7 @@ The detection system combines **thermal imaging, acoustic monitoring, and enviro
 The ESP32-S2 Mini reads temperature and humidity from an **SHT3x sensor** and serves the data via a simple web interface.
 
 ### Features
-- Connects to Wi-Fi (SSID: `iPhone`, Password: `987654321`)  
+- Connects to Wi-Fi (SSID: `YourWIFI`, Password: `PASSWORD`)  
 - Reads temperature and humidity via I²C (SDA: 33, SCL: 35)  
 - Hosts a web server on port 80  
 - Displays sensor readings in real-time on a web page  
