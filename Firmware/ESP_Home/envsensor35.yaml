@@ -1,0 +1,37 @@
+esphome:
+  name: envsensor35
+  friendly_name: envSensor35
+
+esp32:
+  board: esp32-s2-saola-1
+  framework:
+    type: esp-idf
+
+logger:
+
+api:
+  password: "1"
+
+ota:
+  - platform: esphome
+    password: "1"
+
+wifi:
+  ssid: "IoT"
+  password: "InternetOfThings"
+
+captive_portal:
+
+i2c:
+  sda: 33
+  scl: 35
+  scan: true
+
+sensor:
+  - platform: sht3xd
+    temperature:
+      name: "SHT3x Temperature"
+    humidity:
+      name: "SHT3x Humidity"
+    address: 0x44
+    update_interval: 10s
