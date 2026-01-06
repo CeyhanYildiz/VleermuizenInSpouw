@@ -4,3 +4,4 @@
   - Graphs
   - Setups, configurations
   - Schematics
+  - Used hardware
