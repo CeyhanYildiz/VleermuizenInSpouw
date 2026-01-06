@@ -1,0 +1,47 @@
+esphome:
+  name: envsensor34 #nummer van het doosje
+  friendly_name: envsensor34
+  on_boot:
+    priority: -10
+    then:
+      - delay: 15s  # geef Wi-Fi en sensor tijd om te initialiseren voor slaapstand
+      - deep_sleep.enter: deep_sleep_ctrl
+
+esp32:
+  board: lolin_s2_mini
+  framework:
+    type: arduino
+
+logger:
+
+api:
+  password: "1"
+
+ota:
+  - platform: esphome
+    password: "1"
+
+wifi:
+  ssid: "batSenseWifi"
+  password: "batSenseWifi123-_-"
+  fast_connect: true   # versnelt herverbinding voor vaste Wi-Fi
+
+captive_portal:
+
+i2c:
+  sda: 33
+  scl: 35
+  scan: true
+
+sensor:
+  - platform: sht3xd
+    temperature:
+      name: "envsensor34 Temperature"
+    humidity:
+      name: "envsensor34 Humidity"
+    address: 0x44
+    update_interval: 10s
+
+deep_sleep:
+  id: deep_sleep_ctrl
+  sleep_duration: 5min
