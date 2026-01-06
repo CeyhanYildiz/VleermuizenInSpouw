@@ -3,3 +3,4 @@
   - Screenschots
   - Graphs
   - Setups, configurations
+  - Schematics
