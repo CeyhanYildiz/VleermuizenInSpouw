@@ -1,7 +1,6 @@
 # Bat Detection in Cavity Walls
 By Ceyhan Yildiz and Quinten Mathijs
-
-### Project Structure (Overview)
+## Project Structure (Overview)
 - [Docs](https://github.com/CeyhanYildiz/VleermuizenInSpouw/tree/main/Docs)This folder contains datasheets
 - [Firmware](https://github.com/CeyhanYildiz/VleermuizenInSpouw/tree/main/Firmware) This folder contains everything about the ESP and ESPHome
 - [Media](https://github.com/CeyhanYildiz/VleermuizenInSpouw/tree/main/Media) This folder contains screenschots, setups, schematics etc.
