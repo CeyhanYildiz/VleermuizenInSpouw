@@ -30,116 +30,107 @@ The full Arduino firmware can be found here:
 
 ---
 
-# ESPHome Configuration (Alternative Firmware Option)
+# Flashing the S2 Mini with ESPHome
 
-As an alternative to the Arduino firmware, this project also supports **ESPHome**, which offers automatic Wi-Fi setup, deep sleep, OTA updates, and seamless integration with Home Assistant.
+## Overview
+In this part of the project, we configured and flashed the S2 Mini using ESPHome.
+The goal was to correctly program the microcontroller so that it could read the SHT3X sensor and transmit the data via Wi-Fi.
+During this process, we received support from my junior colleague Alexander Petry, who assisted with creating the required configuration files and carrying out the flashing process.
 
-This configuration is ideal for **low-power long-term monitoring** in cavity walls.
-
-## File Structure
-```
-
-projectfolder/
-├── base.yaml        # Base configuration (Wi-Fi, sensor, deep sleep, board setup)
-└── device1.yaml     # Device-specific config (name + include)
-
-````
-
-### base.yaml
-Contains:
-- ESP32-S2 Mini board settings  
-- Wi-Fi configuration  
-- SHT3x sensor (I²C: SDA 33, SCL 35)  
-- ESPHome API, Logger, OTA  
-- Deep sleep controller  
-
-### device1.yaml
-```yaml
-substitutions:
-  devicename: envsensor1
-
-<<: !include base.yaml
-````
-
----
-
-## Setting Up ESPHome
-
-### 1️⃣ Configure Wi-Fi (Important)
-
-Before flashing, open **base.yaml** and update:
-
-```yaml
-wifi:
-  ssid: "JOUW_WIFI_NAAM"
-  password: "JOUW_WIFI_WACHTWOORD"
-  fast_connect: true
-```
-
-⚠️ **The ESP will not connect without valid Wi-Fi credentials.**
-
----
-
-## Flashing Options
-
-### Option A — ESPHome Web Flasher (Recommended)
-
-1. Go to [https://web.esphome.io](https://web.esphome.io)
-2. Click **Connect**
-3. Select the ESP32-S2 Mini port
-4. Click **Install**
-5. Upload `device1.yaml`
-
----
-
-### Option B — ESPHome in Home Assistant
-
-1. Open **ESPHome**
-2. Click **New Device**
-3. Select **Upload YAML**
-4. Choose `device1.yaml`
-5. Install → Select serial port
-
----
-
-### Option C — ESPHome CLI
+## Installing ESPHome
+To get started, ESPHome had to be installed locally on the computer.
+This was done via the Command Prompt (CMD) or PowerShell using the following command:
 
 ```bash
-esphome run device1.yaml
+pip install esphome
 ```
 
-ESPHome compiles and automatically asks for the serial port.
+After installation, it was verified that ESPHome was installed correctly by checking the version number:
 
----
+```bash
+esphome version
+```
 
-## Behavior of This ESPHome Firmware
+When the version was displayed correctly, the installation was successful and the flashing of the S2 Mini could begin.
 
-* Reads temperature & humidity from SHT3x (address 0x44)
-* Logs measurements to ESPHome / Home Assistant
-* Waits 15 seconds → enters deep sleep
-* Wakes every 1 minute for a new measurement
-* Supports OTA updates
-* Extremely low-power, suitable for long-term deployments
+## Flashing the S2 Mini
+The S2 Mini was connected to the computer via USB.
+Next, the YAML configuration file was executed and flashed to the board using the command below:
 
----
+```bash
+esphome run .\HTSensor.yaml
+```
 
-## Troubleshooting
+During this step, the firmware was automatically generated, compiled, and uploaded to the S2 Mini.
+After successful flashing, the microcontroller could immediately be tested using ESPHome’s **log function**:
 
-* Sensor not detected → try address `0x45`
-* Ensure SDA = 33, SCL = 35
-* Try a shorter I²C cable
+```bash
+esphome logs .\HTSensor.yaml
+```
 
----
+These logs allowed us to verify whether the sensor was successfully transmitting data and whether the Wi-Fi connection was established.
 
-## Getting Started
+## YAML Configuration File
+Together with Alexander, the following **YAML-file** was created for the S2 Mini.
+The file contains the configuration for the Wi-Fi connection, the sensor, logging, and the automatic deep-sleep functionality to save energy.
 
-### Requirements
+```yaml
+esphome:
+  name: envsensor17 #box number
+  friendly_name: envsensor17
+  on_boot:
+    priority: -10
+    then:
+      - delay: 15s  #  give Wi-Fi and sensor time to initialize before sleep
+      - deep_sleep.enter: deep_sleep_ctrl
 
-* ESP32-S2 Mini development board
-* Raspberry Pi Pico (optional for extended acquisition)
-* IR camera module (thermal detection)
-* Audio recording module (ultrasonic bat calls)
-* SHT3x or similar environmental sensors
-* SD card module or wireless data storage option
+esp32:
+  board: lolin_s2_mini
+  framework:
+    type: arduino
 
----
+logger:
+
+api:
+  password: "1"
+
+ota:
+  - platform: esphome
+    password: "1"
+
+wifi:
+  ssid: "batSenseWifi"
+  password: "batSenseWifi123-_-"
+  fast_connect: true   # speeds up reconnection for fixed Wi-Fi networks
+
+captive_portal:
+
+i2c:
+  sda: 33
+  scl: 35
+  scan: true
+
+sensor:
+  - platform: sht3xd
+    temperature:
+      name: "envsensor17 Temperature"
+    humidity:
+      name: "envsensor17 Humidity"
+    address: 0x44
+    update_interval: 10s
+
+deep_sleep:
+  id: deep_sleep_ctrl
+  sleep_duration: 5min
+```
+
+## Observations
+- The flashing process went smoothly and without errors.
+- After startup of the S2 Mini, temperature and humidity values were read correctly.
+- The deep-sleep functionality worked as expected, which is essential for energy efficiency during long-term field use.
+- The Wi-Fi connection to the batSenseWifi network was established reliably and remained stable during the test period.
+
+## Result
+- The S2 Mini was successfully flashed with a fully functional ESPHome configuration.
+- The sensor communicates reliably via I²C and Wi-Fi.
+- This configuration will serve as the base firmware for the further rollout of environmental sensors within the project.
