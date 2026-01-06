@@ -22,9 +22,6 @@ The objective of this subproject is to deliver a functional, reproducible sensor
 - logically connects each sensor to the ESP32-S2 via ESPHome;
 - transmits the measured values via Wi-Fi to a central system (e.g. Home Assistant or a backend from BatSenseEmbedded);
 - is sufficiently documented (hardware and firmware) so that another student can rebuild the node and integrate it into the BatSense system.
-  
-## Nice-to-Haves
-- Design and produce a custom PCB.  
 
 ## Key Components
 - **ESP32-S2 Mini**: microcontroller for sensor data collection and wireless communication.  
