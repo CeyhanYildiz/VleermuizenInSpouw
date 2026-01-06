@@ -1,4 +1,5 @@
 # Bat Detection in Cavity Walls
+By Ceyhan Yildiz and Quinten Mathijs
 
 ## Overview
 This project aims to develop a system that can **detect bats in cavity walls**.  
@@ -10,38 +11,34 @@ By monitoring their activity, this project contributes both to **bat conservatio
 - **Architectural**: Provide better guidelines for renovation and insulation projects while respecting bat habitats.  
 
 ## Objectives
-
-### Must-Haves
-- Build and deliver functional hardware modules.  
-- Document the project in an **Application Note**.  
-- Maintain clear project documentation in this repository (README, source code, setup instructions).  
-- Conduct code reviews via GitHub.  
-
+The objective of this subproject is to deliver a functional, reproducible sensor node that:
+- can measure temperature and relative humidity inside a cavity wall using an SHT30/SHT3X sensor;
+- can operate autonomously on battery power, using deep sleep to save energy;
+- logically connects each sensor to the ESP32-S2 via ESPHome;
+- transmits the measured values via Wi-Fi to a central system (e.g. Home Assistant or a backend from BatSenseEmbedded);
+- is sufficiently documented (hardware and firmware) so that another student can rebuild the node and integrate it into the BatSense system.
+  
 ### Nice-to-Haves
 - Design and produce a custom PCB.  
-
-## System Approach
-The detection system combines **thermal imaging, acoustic monitoring, and environmental sensors** to map how bats use cavity walls and to identify influencing factors.
 
 ### Key Components
 - **ESP32-S2 Mini**: microcontroller for sensor data collection and wireless communication.  
 - **Raspberry Pi Pico**: supporting data acquisition.  
 - **IR Camera**: thermal imaging of bat activity.  
-- **Audio Recorder**: ultrasonic bat call detection.  
-- **Sensors**: temperature, humidity, and pressure monitoring.  
-- **Wireless & SD storage**: data backup and redundancy.  
+- **Audio Recorder**: ultrasonic bat call detection (Apodemus Pippyg). 
+- **Sensors**: temperature, humidity, and pressure monitoring (SHT30/SHT3X).
 
-## Development Process
-1. Analyze current issues (battery limitations, condensation, wireless reliability).  
-2. Work in teams of 2–3 students.  
-3. Prototype and test sensor modules.  
-4. Improve iteratively based on test results and feedback.  
+### Results
+The following results were achieved with this sensor node:
+- **Functional hardware module:**
+The combination of the S2 Mini, PowerBoost 500 Charger, and SHT30/SHT3X results in a stable system that can be placed inside a cavity wall.
+- **Stable environmental measurements:**
+Temperature and humidity values are read out reliably via ESPHome.
+- **Wi-Fi communication:**
+The node connects to the configured Wi-Fi network and publishes the sensor values as entities.
+- **Integration with a central system:**
+The data can be read and logged by a higher-level platform (for example Home Assistant or a central server within BatSenseEmbedded).
 
-## Deliverables
-- Functional hardware modules.  
-- Application Note (system design, operation, limitations).  
-- GitHub repository including:  
-  - Source code  
-  - README documentation  
-  - Setup instructions  
-- Optional: PCB design.  
+The number of working modules, test duration, and stability tests depend on the specific measurements and setups carried out during the project. These can be supplemented with graphs, logs, and screenshots in the documentation and in the central project report.
+
+
