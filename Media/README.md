@@ -1,5 +1,5 @@
 ### Media 
 - **Content:**
-- Screenschots
-- Graphs
-- Setups, configurations
+  - Screenschots
+  - Graphs
+  - Setups, configurations
