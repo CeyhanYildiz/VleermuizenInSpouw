@@ -5,3 +5,4 @@
   - Setups, configurations
   - Schematics
   - Used hardware
+  - Test of Pippyg
